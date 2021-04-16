@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Stars from './Assets/Stars.svg';
 import StarsBackground from './Assets/StarsBackground.svg';
 import ParentSlide from './ParentSlide';
@@ -9,7 +9,7 @@ const Main = ({ data, genres }) => {
   const [textParagraph, setTextParagraph] = useState(
     'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate doloribus dolores reiciendis fuga maxime inventore.'
   );
-  const [genre, setGenre] = useState(['Crime', 'Drama', 'Mystery']);
+  const [genre, setGenre] = useState([]);
   const [backdropPath, setBackdropPath] = useState(
     '/5NxjLfs7Bi07bfZCRl9CCnUw7AA.jpg'
   );
@@ -29,22 +29,36 @@ const Main = ({ data, genres }) => {
     setBackdropPath(backdropPath);
   };
 
-  // useEffect(() => {
-  //   const gitGud = () => {
-  //     let firstItem = [];
-  //     firstItem.push(data.results[0]);
-  //     let firstObj = firstItem[0];
-  //     console.log(firstObj);
-  //     mainInfoTransition(
-  //       firstObj.title,
-  //       firstObj.vote_average,
-  //       firstObj.overview,
-  //       firstObj.genre_ids,
-  //       firstObj.backdrop_path
-  //     );
-  //   };
-  //   data.results && gitGud();
-  // }, [data]);
+  useEffect(() => {
+    const gitGud = () => {
+      console.log(genres.genres);
+      let firstItem = [];
+      firstItem.push(data.results[0]);
+      let firstObj = firstItem[0];
+
+      let genreContainer = [];
+
+      for (let i = 0; i < firstObj.genre_ids.length; i++) {
+        for (let j = 0; j < genres.genres.length; j++) {
+          if (firstObj.genre_ids[i] === genres.genres[j].id) {
+            genreContainer.push(genres.genres[j].name);
+          }
+        }
+      }
+
+      mainInfoTransition(
+        firstObj.title,
+        firstObj.vote_average,
+        firstObj.overview,
+        genreContainer,
+        firstObj.backdrop_path
+      );
+    };
+
+    if (data.results && genres.genres) {
+      gitGud();
+    }
+  }, [data, genres]);
   return (
     <div
       className="main"
