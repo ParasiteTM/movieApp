@@ -31,7 +31,6 @@ const Main = ({ data, genres }) => {
 
   useEffect(() => {
     const gitGud = () => {
-      console.log(genres.genres);
       let firstItem = [];
       firstItem.push(data.results[0]);
       let firstObj = firstItem[0];

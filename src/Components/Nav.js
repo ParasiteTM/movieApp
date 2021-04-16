@@ -13,7 +13,6 @@ const Nav = ({ setMode, handleSearch, mode }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(search);
     handleSearch(search);
   };
   useEffect(() => {
